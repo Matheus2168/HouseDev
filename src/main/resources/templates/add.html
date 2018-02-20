@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>add</title>
+</head>
+<body>
+<a href="/"><button> BACK TO LIST </button></a>
+
+<div class="house">
+    <h4> House </h4>
+    <form action="/add/house" method="post">
+        <input name="adress" type="text" placeholder="Adress..."/>
+
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="hc">
+    <h4> Housing community</h4>
+    <form action="/add/hc" method="post">
+        <input name="name" type="text" placeholder="Name..."/>
+        <select name="house">
+            <option th:if="${house.getHousingCommunity() == null}" th:value="${house.getId()}" th:each=" house : ${houses}" th:text="${house.getAdress()}"></option>
+
+        </select>
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="flat">
+    <h4> Flat </h4>
+    <form action="/add/flat" method="post">
+        <input name="number" type="number" placeholder="Flat number..."/>
+        <input name="area" type="text" placeholder="Area..."/>
+        <select name="house" title="House">
+            <option th:if="${house.getHousingCommunity() != null}" th:value="${house.getId()}" th:each=" house : ${houses}" th:text="${house.getAdress()}"></option>
+
+        </select>
+        <input type="submit"/>
+    </form>
+</div>
+
+<div class="habitant">
+    <h4> Habitant </h4>
+    <form action="/add/habitant" method="post">
+        <input name="firstName" type="text" placeholder="First name..."/>
+        <input name="lastName" type="text" placeholder="Last name..."/>
+        <select name="gender">
+            <option th:value="${gender}" th:each="gender : ${genders}" th:text="${gender.toString()}"></option>
+        </select>
+        <select name="flat">
+            <option th:value="${flat.getId()}" th:each="flat : ${flats}" th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></option>
+        </select>
+        <input type="submit"/>
+    </form>
+</div>
+
+</body>
+</html>

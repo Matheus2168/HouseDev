@@ -1,9 +1,6 @@
 package pl.hotowy.housingdev.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Habitant implements Identifiable{
@@ -16,7 +13,7 @@ public class Habitant implements Identifiable{
     private String lastName;
     private Gender gender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Flat flat;
 
 
@@ -32,6 +29,17 @@ public class Habitant implements Identifiable{
         this.setLastName(newData.getLastName());
         this.setFlat(newData.getFlat());
         this.setGender(newData.getGender());
+    }
+
+    @Override
+    public String toString() {
+        return "Habitant{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", flat=" + flat +
+                '}';
     }
 
     public void setId(long id) {

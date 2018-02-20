@@ -1,9 +1,6 @@
 package pl.hotowy.housingdev.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class HousingCommunity implements Identifiable, Mergeable{
@@ -14,7 +11,7 @@ public class HousingCommunity implements Identifiable, Mergeable{
 
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private House house;
 
 

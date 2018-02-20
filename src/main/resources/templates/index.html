@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/add"><button> ADD </button></a>
+<a href="/edit"><button> EDIT </button></a>
+<p th:text="'housingCommunities:'+${housingCommunities.size()}"></p>
+
+<ul th:each="hc : ${housingCommunities}">
+    <a th:href="@{'/hc/'+${hc.getId()}}"><li th:if="${hc.house}" th:text="${hc.getName()}+' : '+${hc.getHouse().getAdress()}"></li></a>
+    <li th:if="!${hc.house}" th:text="${hc.getName()}+' : no house '"></li>
+</ul>
+
+
 
 </body>
 </html>

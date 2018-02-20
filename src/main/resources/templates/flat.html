@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3 th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></h3>
+<h4 th:text="'Flat area: '+${flat.getArea()}"></h4>
+<ul>
+    <li th:each="habitant : ${habitants}" th:text="${habitant.firstName}+' '+${habitant.getLastName()}+' '+'('+${habitant.getGender()}+')'"></li>
+
+</ul>
+
+</body>
+</html>

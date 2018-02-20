@@ -1,10 +1,13 @@
 package pl.hotowy.housingdev.model;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Flat implements Identifiable{
+@Transactional
+public class Flat implements Identifiable, Comparable<Flat>{
 
     @Id
     @GeneratedValue
@@ -14,10 +17,10 @@ public class Flat implements Identifiable{
 
     private double area;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private House house;
 
-    @OneToMany(mappedBy = "flat")
+    @OneToMany(mappedBy = "flat",fetch = FetchType.EAGER)
     private List<Habitant> habitants;
 
     @Override
@@ -68,5 +71,13 @@ public class Flat implements Identifiable{
 
     public void setHabitants(List<Habitant> habitants) {
         this.habitants = habitants;
+    }
+
+    @Override
+    public int compareTo(Flat o) {
+        if (this == o){
+            return 0;
+        }
+        else return 1;
     }
 }

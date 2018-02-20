@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<p th:text="'Flats:'+${hc.getHouse().getFlats().size()}"></p>
+<p th:text="'Total area: '+${totalArea}"></p>
+<p th:text="'Total habitants: '+${totalHabitants}"></p>
+
+<ul th:each="flat : ${hc.getHouse().getFlats()}">
+    <a th:href="@{'/hc/'+${hc.getId()}+'/flat/'+${flat.getId()}}"><li th:text="${hc.getHouse().getAdress()}+' / '+${flat.getNumber()}"></li></a>
+</ul>
+
+
+
+</body>
+</html>

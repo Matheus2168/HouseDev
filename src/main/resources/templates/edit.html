@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title> Edit</title>
+    <script type="text/javascript" th:src="@{/js/edit.js}"></script>
+</head>
+<body onload="hideAll()">
+
+    <form action="/edit" method="post">
+        <select name="object" id="select" onclick="showProperDiv()">
+            <option style="display:none;">Select type to edit</option>
+            <option value="hc"> Housing Community </option>
+            <option value="house"> House </option>
+            <option value="flat"> Flat </option>
+            <option value="habitant"> Habitant </option>
+        </select>
+    </form>
+
+
+    <p id="text"></p>
+
+    <div id="hc">
+        <form action="/edit/hc" method="post">
+            <select name="id">
+                <option th:value="${hc.getId()}" th:each=" hc : ${hcList}" th:text="${hc.getName()}"></option>
+            </select>
+            <input type="submit" value="SELECT"/>
+        </form>
+
+    </div>
+
+
+    <div id="house">
+        <form>
+            <select>
+                <option th:each=" house : ${houseList}" th:text="${house.getAdress()}"></option>
+            </select>
+            <input type="submit" value="SELECT"/>
+        </form>
+
+    </div>
+
+    <div id="flat">
+        <form>
+            <select>
+                <option th:each=" flat : ${flatList}" th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></option>
+            </select>
+            <input type="submit" value="SELECT"/>
+        </form>
+
+    </div>
+
+    <div id="habitant">
+        <form>
+            <select>
+                <option th:each=" habitant : ${habitantList}" th:text="${habitant.getFirstName()}+' '+${habitant.getLastName()}"></option>
+            </select>
+            <input type="submit" value="SELECT"/>
+        </form>
+
+    </div>
+</body>
+</html>
