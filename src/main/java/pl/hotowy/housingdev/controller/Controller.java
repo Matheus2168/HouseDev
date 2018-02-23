@@ -2,10 +2,7 @@ package pl.hotowy.housingdev.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.hotowy.housingdev.model.*;
 import pl.hotowy.housingdev.service.DatabaseOperator;
 
@@ -188,6 +185,7 @@ public class Controller {
                            @RequestParam(value = "name") String name,
                            @RequestParam(value = "house") String houseId){
 
+        System.out.println(id);
        HousingCommunity hc =operator.selectHousingCommunity(id.toString());
        hc.setName(name);
        if (houseId.equals("null")){
@@ -201,6 +199,134 @@ public class Controller {
 
 
         return "redirect:/";
+    }
+
+    @PostMapping("/edit/house")
+    public String editHouse(Model model,
+                         @RequestParam (value = "id") String hcId){
+        model.addAttribute("house",operator.selectHouse(hcId));
+        return "editHouse";
+    }
+    @PostMapping("/edit/house/success/{id}")
+    public String editedHosue(@PathVariable Long id,
+                           @RequestParam(value = "adress") String adress)
+                           {
+
+        House house =operator.selectHouse(id.toString());
+        house.setAdress(adress);
+
+        operator.update(house);
+
+
+        return "redirect:/";
+    }
+    @PostMapping("/edit/flat")
+    public String editFlat(Model model,
+                            @RequestParam (value = "id") String hcId){
+
+        List<House> houses = (List<House>)(Object) operator.selectAll(House.class);
+
+        model.addAttribute("flat",operator.selectFlat(hcId));
+        model.addAttribute("houses",houses);
+        return "editFlat";
+    }
+    @PostMapping("/edit/flat/success/{id}")
+    public String editedFlat(@PathVariable Long id,
+                             @RequestParam(value = "number") int number,
+                             @RequestParam(value = "area") String area
+
+    ){
+        Flat flat = operator.selectFlat(id.toString());
+        flat.setArea(Double.parseDouble(area));
+        flat.setNumber(number);
+
+
+        operator.update(flat);
+        return "redirect:/";
+    }
+
+    @PostMapping("/edit/habitant")
+    public String editHabitant(Model model,
+                           @RequestParam (value = "id") String hcId){
+
+        List<Flat> flats = (List<Flat>)(Object) operator.selectAll(Flat.class);
+
+        model.addAttribute("habitant",operator.selectHabitant(hcId));
+        model.addAttribute("flats", flats);
+        model.addAttribute("genders", Gender.values());
+
+        return "editHabitant";
+    }
+    @PostMapping("/edit/habitant/success/{id}")
+    public String editedHabitant(@PathVariable Long id,
+                                 @RequestParam(value = "firstName") String firstName,
+                                 @RequestParam(value = "lastName") String lastName,
+                                 @RequestParam(value = "gender",required = true) Gender gender,
+                                 @RequestParam(value = "flat",required = true) String flatId
+    ){
+        Habitant habitant = operator.selectHabitant(id.toString());
+        habitant.setFirstName(firstName);
+        habitant.setLastName(lastName);
+        habitant.setGender(gender);
+        if (flatId.equals("null")){
+            habitant.setFlat(null);
+        }
+        else {
+            habitant.setFlat(operator.selectFlat(flatId));
+        }
+
+
+        operator.update(habitant);
+        return "redirect:/";
+    }
+
+    //DELETE METHODS AUTOMATICLY SET PARENT OBJECT TO NULL;
+    //                               CHILD OBJECTS HAVE TO BE DETACHED BY USER
+
+    @GetMapping("/delete/habitant/{id}")
+    public String deleteHabitant(@PathVariable Long id){
+        Habitant habitant = operator.selectHabitant(id.toString());
+        habitant.setFlat(null);
+        operator.update(habitant);
+        operator.delete(Habitant.class,id.toString());
+        return "redirect:/";
+    }
+    @GetMapping("/delete/flat/{id}")
+    public String deleteFlat(@PathVariable Long id){
+        Flat flat = operator.selectFlat(id.toString());
+        flat.setHouse(null);
+        operator.update(flat);
+        operator.delete(Flat.class,id.toString());
+        return "redirect:/";
+    }
+    @GetMapping("/delete/house/{id}")
+    public String deleteHouse(@PathVariable Long id){
+
+        List<HousingCommunity> housingCommunities = operator.selectAllHousingCommunities();
+        for (HousingCommunity housingCommunity : housingCommunities) {
+            if (housingCommunity.getHouse().getId() == Long.parseLong(id.toString())){
+                HousingCommunity housingCommunity1 = operator.selectHousingCommunity(String.valueOf(housingCommunity.getId()));
+                housingCommunity1.setHouse(null);
+                operator.update(housingCommunity1);
+            }
+        }
+
+        House house = operator.selectHouse(id.toString());
+        house.setHousingCommunity(null);
+        operator.update(house);
+        operator.delete(House.class,id.toString());
+        return "redirect:/";
+    }
+    @GetMapping("/delete/hc/{id}")
+    public String deleteHc(@PathVariable Long id){
+        operator.delete(HousingCommunity.class,id.toString());
+        return "redirect:/";
+    }
+
+    @ExceptionHandler({org.hibernate.exception.LockAcquisitionException.class,
+                       org.hibernate.exception.ConstraintViolationException.class})
+    public String errorWhileDeletingObjectWithExistingRelation(){
+        return "deletingObjectWithRelation";
     }
 
 

@@ -4,9 +4,14 @@
     <meta charset="UTF-8"/>
     <title> Edit</title>
     <script type="text/javascript" th:src="@{/js/edit.js}"></script>
-</head>
-<body onload="hideAll()">
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 
+</head>
+<body class="bg-dark text-light" onload="hideAll()">
+<div class="border border-light menu">
     <form action="/edit" method="post">
         <select name="object" id="select" onclick="showProperDiv()">
             <option style="display:none;">Select type to edit</option>
@@ -17,10 +22,16 @@
         </select>
     </form>
 
+</div>
 
-    <p id="text"></p>
+<div class="border border-light menu">
+    <h4 id="text"></h4>
+</div>
 
-    <div id="hc">
+
+
+    <div id="hc" class="border border-light menu">
+
         <form action="/edit/hc" method="post">
             <select name="id">
                 <option th:value="${hc.getId()}" th:each=" hc : ${hcList}" th:text="${hc.getName()}"></option>
@@ -31,30 +42,31 @@
     </div>
 
 
-    <div id="house">
-        <form>
-            <select>
-                <option th:each=" house : ${houseList}" th:text="${house.getAdress()}"></option>
+    <div id="house" class="border border-light menu">
+
+        <form action="/edit/house" method="post">
+            <select name="id">
+                <option th:value="${house.getId()}" th:each=" house : ${houseList}" th:text="${house.getAdress()}"></option>
             </select>
             <input type="submit" value="SELECT"/>
         </form>
 
     </div>
 
-    <div id="flat">
-        <form>
-            <select>
-                <option th:each=" flat : ${flatList}" th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></option>
+    <div id="flat" class="border border-light menu">
+        <form action="/edit/flat" method="post">
+            <select name="id">
+                <option th:value="${flat.getId()}" th:each=" flat : ${flatList}" th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></option>
             </select>
             <input type="submit" value="SELECT"/>
         </form>
 
     </div>
 
-    <div id="habitant">
-        <form>
-            <select>
-                <option th:each=" habitant : ${habitantList}" th:text="${habitant.getFirstName()}+' '+${habitant.getLastName()}"></option>
+    <div id="habitant" class="border border-light menu">
+        <form action="/edit/habitant" method="post">
+            <select name="id">
+                <option th:value="${habitant.getId()}" th:each=" habitant : ${habitantList}" th:text="${habitant.getFirstName()}+' '+${habitant.getLastName()}"></option>
             </select>
             <input type="submit" value="SELECT"/>
         </form>

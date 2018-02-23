@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit Habitant</title>
+    <script type="text/javascript" th:src="@{/js/addFormValidation.js}"></script>
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
+</head>
+<body class="bg-dark text-light">
+<div class="border border-light menu delete">
+    <h4 th:text="${habitant.getFirstName()}+' '+${habitant.getLastName()}"></h4>
+    <a onclick=" return areYouSure()" th:href="'/delete/habitant/'+${habitant.getId()}"><button class="delete">DELETE</button></a>
+</div>
+<div id="blink" class="border border-light menu">
+<form th:action="'/edit/habitant/success/'+${habitant.getId()}" method="post" th:object="${habitant}" onsubmit="return checkHabitant()">
+    <input id="firstName" name="firstName" type="text" placeholder="First name..." th:value="${habitant.getFirstName()}"/>
+    <input id="lastName" name="lastName" type="text" placeholder="Last name..." th:value="${habitant.getLastName()}"/>
+    <select id="gender" name="gender" class="mySelect">
+        <option th:selected="${habitant.getGender() == gender}" th:value="${gender}" th:each="gender : ${genders}" th:text="${gender.toString()}"></option>
+    </select>
+    <select id="habitantSelectFlat" name="flat" class="mySelect">
+        <option th:selected="${habitant.getFlat().getId() == flat.getId()}" th:value="${flat.getId()}" th:each="flat : ${flats}" th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></option>
+        <option value="null" th:text="'DETACH'"></option>
+    </select>
+    <input type="submit"/>
+    </form>
+
+
+</div>
+
+
+</body>
+</html>

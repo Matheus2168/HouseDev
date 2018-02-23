@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Edit Hc</title>
+    <script type="text/javascript" th:src="@{/js/addFormValidation.js}"></script>
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
 </head>
-<body>
-<h4></h4>
-<form th:action="'/edit/hc/success/'+${hc.getId()}" method="post" th:object="${hc}">
-    <input name="name" type="text" placeholder="Name..." th:value="${hc.getName()}"/>
-    <select name="house">
+<body class="bg-dark text-light">
+<div class="border border-light menu">
+    <h4 th:text="${hc.getName()}"></h4>
+    <a onclick=" return areYouSure()" th:href="'/delete/hc/'+${hc.getId()}"><button class="delete">DELETE</button></a>
+</div>
+<div id="blink" class="border border-light menu">
+<form th:action="'/edit/hc/success/'+${hc.getId()}" method="post" th:object="${hc}" onsubmit="return checkHc()">
+    <input id="hcName" name="name" type="text" placeholder="Name..." th:value="${hc.getName()}"/>
+    <select id="hcSelectHouse" name="house">
+        <option th:if="${hc.getHouse() != null}" th:value="${hc.getHouse().getId()}" th:text="${hc.getHouse().getAdress()}"></option>
         <option th:if="${house.getHousingCommunity() == null}" th:value="${house.getId()}" th:each=" house : ${houses}" th:text="${house.getAdress()}"></option>
         <option value="null" th:text="'DETACH'"></option>
 
     </select>
     <input type="submit"/>
 </form>
-
+</div>
 
 </body>
 </html>

@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
 </head>
-<body>
+<body class="bg-dark text-light">
+<div class="border border-light menu">
 <h3 th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></h3>
 <h4 th:text="'Flat area: '+${flat.getArea()}"></h4>
+</div>
+<div class="border border-light menu">
 <ul>
     <li th:each="habitant : ${habitants}" th:text="${habitant.firstName}+' '+${habitant.getLastName()}+' '+'('+${habitant.getGender()}+')'"></li>
 
 </ul>
-
+</div>
 </body>
 </html>

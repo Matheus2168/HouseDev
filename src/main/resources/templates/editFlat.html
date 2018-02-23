@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit Hc</title>
+    <script type="text/javascript" th:src="@{/js/addFormValidation.js}"></script>
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
+</head>
+<body class="bg-dark text-light">
+<div class="border border-light menu">
+    <h4 th:text="${flat.house.getAdress()}+' / '+${flat.getNumber()}"></h4>
+    <a onclick=" return areYouSure()" th:href="'/delete/flat/'+${flat.getId()}"><button class="delete">DELETE</button></a>
+</div>
+<div id="blink" class="border border-light menu">
+<form th:action="'/edit/flat/success/'+${flat.getId()}" method="post" th:object="${flat}" onsubmit="return checkFlat()">
+        <input id="number" name="number" type="number" placeholder="Flat number..." th:value="${flat.getNumber()}"/>
+        <input id="area" name="area" type="text" placeholder="Area..." th:value="${flat.getArea()}"/>
+        <input type="submit"/>
+</form>
+</div>
+
+
+</body>
+</html>
+
+<!-- <select id="flatSelectHouse" name="house" title="House" class="mySelect">
+            <option th:if="${house.getHousingCommunity() != null}" th:value="${house.getId()}" th:each=" house : ${houses}" th:text="${house.getAdress()}"></option>
+            <option value="null" th:text="'DETACH'"></option>
+        </select>
+        YOU SHOULDN'T BE ABLE TO MIGRATE FLATS BETWEEN HOUSES -->

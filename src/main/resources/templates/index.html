@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 </head>
-<body>
-<a href="/add"><button> ADD </button></a>
-<a href="/edit"><button> EDIT </button></a>
-<p th:text="'housingCommunities:'+${housingCommunities.size()}"></p>
+<body class="bg-dark text-light">
 
+
+<div class="border border-light menu">
+
+    <a href="/add"><button class="menu"> ADD </button></a>
+    <a href="/edit"><button class="menu"> EDIT </button></a>
+
+</div>
+
+<div class="border border-light title">
+<h4 th:text="'housingCommunities: '+${housingCommunities.size()}"></h4>
+</div>
+<div class="border border-light content">
 <ul th:each="hc : ${housingCommunities}">
     <a th:href="@{'/hc/'+${hc.getId()}}"><li th:if="${hc.house}" th:text="${hc.getName()}+' : '+${hc.getHouse().getAdress()}"></li></a>
     <li th:if="!${hc.house}" th:text="${hc.getName()}+' : no house '"></li>
 </ul>
-
+</div>
 
 
 </body>

@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Edit Hc</title>
+    <script type="text/javascript" th:src="@{/js/addFormValidation.js}"></script>
     <link href="../static/css/Style.css"
           th:href="@{/css/Style.css}"
           rel="stylesheet" media="screen" />
@@ -11,14 +12,14 @@
 </head>
 <body class="bg-dark text-light">
 <div class="border border-light menu">
-    <h4 th:text="'Flats:'+${hc.getHouse().getFlats().size()}"></h4>
-    <h4 th:text="'Total area: '+${totalArea}"></h4>
-    <h4 th:text="'Total habitants: '+${totalHabitants}"></h4>
+    <h4 th:text="${house.getAdress()}"></h4>
+    <a onclick=" return areYouSure()" th:href="'/delete/house/'+${house.getId()}"><button class="delete">DELETE</button></a>
 </div>
 <div class="border border-light menu">
-<ul th:each="flat : ${hc.getHouse().getFlats()}">
-    <a th:href="@{'/hc/'+${hc.getId()}+'/flat/'+${flat.getId()}}"><li th:text="${hc.getHouse().getAdress()}+' / '+${flat.getNumber()}"></li></a>
-</ul>
+<form th:action="'/edit/house/success/'+${house.getId()}" method="post" th:object="${house}" onsubmit="return checkHouse()">
+        <input id="adress" name="adress" type="text" placeholder="Adress..." class="" th:value="${house.getAdress()}"/>
+        <input type="submit" class=""/>
+    </form>
 </div>
 
 

@@ -102,5 +102,14 @@ public class DatabaseOperator {
         return result;
     }
 
+    public void delete(Class objectClass, String idDel){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Query query= entityManager.createQuery("DELETE FROM "+objectClass.getName()+" WHERE id ="+idDel);
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
 
 }

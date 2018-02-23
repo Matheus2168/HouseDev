@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title> ERROR </title>
     <link href="../static/css/Style.css"
           th:href="@{/css/Style.css}"
           rel="stylesheet" media="screen" />
@@ -10,17 +10,14 @@
 
 </head>
 <body class="bg-dark text-light">
+
 <div class="border border-light menu">
-    <h4 th:text="'Flats:'+${hc.getHouse().getFlats().size()}"></h4>
-    <h4 th:text="'Total area: '+${totalArea}"></h4>
-    <h4 th:text="'Total habitants: '+${totalHabitants}"></h4>
-</div>
-<div class="border border-light menu">
-<ul th:each="flat : ${hc.getHouse().getFlats()}">
-    <a th:href="@{'/hc/'+${hc.getId()}+'/flat/'+${flat.getId()}}"><li th:text="${hc.getHouse().getAdress()}+' / '+${flat.getNumber()}"></li></a>
-</ul>
+    <h3> Error - You are trying to delete object with existing relation</h3>
 </div>
 
+<div class="border border-light menu">
+<h5> Before deleting selected object you need to <a href="/edit">edit</a> all relations with others by selecting DETACH option at dropdown lists.</h5>
+</div>
 
 </body>
 </html>

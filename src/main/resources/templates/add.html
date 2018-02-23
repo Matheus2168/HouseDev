@@ -3,24 +3,34 @@
 <head>
     <meta charset="UTF-8"/>
     <title>add</title>
+    <script type="text/javascript" th:src="@{/js/addFormValidation.js}"></script>
+    <link href="../static/css/Style.css"
+          th:href="@{/css/Style.css}"
+          rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+
 </head>
-<body>
-<a href="/"><button> BACK TO LIST </button></a>
+<body class="bg-dark text-light">
+<div class="border border-light menu">
+    <a href="/"><button> BACK TO LIST </button></a>
+</div>
 
-<div class="house">
+
+<div id="houseDiv" class="house border border-light menu">
     <h4> House </h4>
-    <form action="/add/house" method="post">
-        <input name="adress" type="text" placeholder="Adress..."/>
+    <form action="/add/house" method="post" onsubmit="checkHouse()" >
+        <input id="adress" name="adress" type="text" placeholder="Adress..." class="" />
 
-        <input type="submit"/>
+        <input type="submit" class=""/>
     </form>
 </div>
 
-<div class="hc">
+<div id="hcDiv" class="hc border border-light menu">
     <h4> Housing community</h4>
-    <form action="/add/hc" method="post">
-        <input name="name" type="text" placeholder="Name..."/>
-        <select name="house">
+    <form action="/add/hc" method="post" onsubmit="return checkHc()" >
+        <input id="hcName" name="name" type="text" placeholder="Name..." class=""/>
+        <select id="hcSelectHouse" name="house" class="mySelect">
+            <option value="0" style="display:none;">House></option>
             <option th:if="${house.getHousingCommunity() == null}" th:value="${house.getId()}" th:each=" house : ${houses}" th:text="${house.getAdress()}"></option>
 
         </select>
@@ -28,12 +38,13 @@
     </form>
 </div>
 
-<div class="flat">
+<div id="flatDiv" class="flat border border-light menu">
     <h4> Flat </h4>
-    <form action="/add/flat" method="post">
-        <input name="number" type="number" placeholder="Flat number..."/>
-        <input name="area" type="text" placeholder="Area..."/>
-        <select name="house" title="House">
+    <form action="/add/flat" method="post" onsubmit="return checkFlat()">
+        <input id="number" name="number" type="number" placeholder="Flat number..."/>
+        <input id="area" name="area" type="text" placeholder="Area..."/>
+        <select id="flatSelectHouse" name="house" title="House" class="mySelect">
+            <option value="0" style="display:none;">House></option>
             <option th:if="${house.getHousingCommunity() != null}" th:value="${house.getId()}" th:each=" house : ${houses}" th:text="${house.getAdress()}"></option>
 
         </select>
@@ -41,15 +52,17 @@
     </form>
 </div>
 
-<div class="habitant">
+<div id="habDiv" class="habitant border border-light menu">
     <h4> Habitant </h4>
-    <form action="/add/habitant" method="post">
-        <input name="firstName" type="text" placeholder="First name..."/>
-        <input name="lastName" type="text" placeholder="Last name..."/>
-        <select name="gender">
+    <form action="/add/habitant" method="post" onsubmit="return checkHabitant()">
+        <input id="firstName" name="firstName" type="text" placeholder="First name..."/>
+        <input id="lastName" name="lastName" type="text" placeholder="Last name..."/>
+        <select id="gender" name="gender" class="mySelect">
+            <option value="0" style="display:none;">Gender></option>
             <option th:value="${gender}" th:each="gender : ${genders}" th:text="${gender.toString()}"></option>
         </select>
-        <select name="flat">
+        <select id="habitantSelectFlat" name="flat" class="mySelect">
+            <option value="0" style="display:none;">Flat></option>
             <option th:value="${flat.getId()}" th:each="flat : ${flats}" th:text="${flat.getHouse().getAdress()}+' / '+${flat.getNumber()}"></option>
         </select>
         <input type="submit"/>
