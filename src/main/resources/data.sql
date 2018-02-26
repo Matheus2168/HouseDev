@@ -1,0 +1,11 @@
+INSERT INTO House (id, adress) VALUES (1, 'Klonowa 10');
+INSERT INTO House (id, adress) VALUES (2, 'Jaracza 1C');
+INSERT INTO Housing_Community (id, name, house_id) VALUES (1, 'Jagoda', 1);
+INSERT INTO Housing_Community (id, name, house_id) VALUES (2, 'Marruda', 2);
+INSERT INTO Housing_Community (id, name) VALUES (3, 'Samotna');
+INSERT INTO Flat (id, area, number, house_id) VALUES (1, 44.5, 1, 1);
+INSERT INTO Flat (id, area, number, house_id) VALUES (2, 22.0, 2, 1);
+INSERT INTO Flat (id, area, number, house_id) VALUES (3, 13, 3, 1);
+INSERT INTO habitant (id, first_name, gender, last_name, flat_id) VALUES (1, 'Marek', 0, 'Nawara',1);
+INSERT INTO habitant (id, first_name, gender, last_name, flat_id) VALUES (2, 'Angelika', 1, 'Nawara',1);
+INSERT INTO habitant (id, first_name, gender, last_name, flat_id) VALUES (3, 'Czarek', 0, 'Kaktus',2);
